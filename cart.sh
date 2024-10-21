@@ -8,7 +8,7 @@ useradd roboshop
 
 mkdir /app
 
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
+curl  -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
 cd /app
 unzip /tmp/cart.zip
 
