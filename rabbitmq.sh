@@ -1,5 +1,5 @@
-#cp rabbitmq.service /etc/systemd/system/rabbitmq.service
-cp rabbitmq.service /etc/yum.repos.d/rabbitmq.service
+#cp rabbitmq.repo /etc/systemd/system/rabbitmq.repo
+cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 
 dnf install rabbitmq-server -y
 
