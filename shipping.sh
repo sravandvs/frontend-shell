@@ -1,3 +1,5 @@
+cp shipping.service /etc/yum.repos.d/shipping.service
+
 dnf install maven -y
 
 useradd roboshop
