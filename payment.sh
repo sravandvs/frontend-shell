@@ -7,7 +7,7 @@ cp payment.service /etc/systemd/system/payment.service
 echo -e '$color Install Python $no_color'
 dnf install python3 gcc python3-devel -y
 
-app_prerequisites()
+app_prerequisites
 
 echo -e "$color Download Application Dependencies $no_color"
 pip3 install -r requirements.txt
