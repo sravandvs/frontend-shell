@@ -23,3 +23,16 @@ echo -e "$color Extract Application Content $no_color"
 unzip /tmp/$app_name.zip &>>log_file
 echo $?
 }
+
+print_heading() {
+  echo -e "$color $1 $no_color" &>>Slog_file
+  echo -e "$color $1 $no_color"
+}
+
+status_check() {
+  if [$1 -eq 0]; then
+    echo -e "\e[32m SUCCESS \e[0m"
+  else
+    echo -e "\e[32m FAILURE \e[0m"
+  fi
+}
