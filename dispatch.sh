@@ -21,4 +21,4 @@ echo -e "$color Start Application Service $no_color"
 systemctl daemon-reload &>>log_file
 systemctl enable dispatch &>>log_file
 systemctl restart dispatch &>>log_file
-echo $
+echo $?
