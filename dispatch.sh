@@ -1,24 +1,24 @@
 source common.sh
 app_name=dispatch
 
-echo -e "$color Copy Dispatch Service File $no_color"
+print_heading "Copy Dispatch Service File"
 cp dispatch.service /etc/systemd/system/dispatch.service &>>log_file
-echo $?
+status_check $?
 
-echo -e "$color Install GoLang $no_color"
+print_heading "Install GoLang"
 dnf install golang -y &>>log_file
-echo $?
+status_check $?
 
 app_prerequisites
 
-echo -e "$color Copy Download Application Dependencies $no_color"
+print_heading "Copy Download Application Dependencies"
 go mod init dispatch &>>log_file
 go get &>>log_file
 go build &>>log_file
-echo $?
+status_check $?
 
-echo -e "$color Start Application Service $no_color"
+print_heading "Start Application Service"
 systemctl daemon-reload &>>log_file
 systemctl enable dispatch &>>log_file
 systemctl restart dispatch &>>log_file
-echo $?
+status_check $?
