@@ -116,7 +116,7 @@ maven_setup() {
 
   for sql_file in schema app-user master-data; do
    print_heading "Load SQL File - $sql_file"
-   mysql -h mysql.devopsdvs.online -uroot
+   mysql -h mysql.devopsdvs.online -uroot &>>$log_file
    status_check $?
   done
 
