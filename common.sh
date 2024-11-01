@@ -40,3 +40,85 @@ status_check() {
     exit 1
   fi
 }
+
+systemd_setup() {
+
+ print_heading "Copy the Service File"
+ cp $scripts_path/$app_name.service /etc/systemd/system/$app_name.service
+ status_check $?
+
+ print_heading "Start Application Service File"
+  systemctl daemon-reload &>>$log_file
+  systemctl enable $app_name &>>$log_file
+  systemctl restart $app_name &>>$log_file
+  status_check $?
+}
+
+nodejs_setup() {
+  print_heading "Disable Default NodeJS"
+  dnf module disable nodejs -y &>>$log_file
+  status_check $?
+
+
+  print_heading "Enable Default NodeJS 20"
+  dnf module enable nodejs:20 -y &>>$log_file
+  status_check $?
+
+
+  print_heading "Install NodeJS"
+  dnf install nodejs -y &>>$log_file
+  status_check $?
+
+
+  app_prerequisites
+
+  cd /app
+
+  print_heading "Install NodeJS Dependencies"
+  npm install &>>$log_file
+  status_check $?
+
+  systemd_setup
+
+}
+
+python_setup() {
+
+  print_heading "Install Python"
+  dnf install python3 gcc python3-devel -y
+  status_check $?
+
+  app_prerequisites
+
+  print_heading "Download Application Dependencies"
+  pip3 install -r requirements.txt
+  status_check $?
+
+systemd_setup
+}
+
+maven_setup() {
+
+  print_heading "Install Maven"
+  dnf install maven -y &>>$log_file
+  status_check $?
+
+  app_prerequisites
+
+  print_heading "Download Application Dependencies"
+  mvn clean package &>>$log_file
+  mv target/$app_name-1.0.jar $app_name.jar &>>$log_file
+  status_check $?
+
+  print_heading "Install MySQL Client"
+  dnf install mysql -y &>>$log_file
+  status_check $?
+
+  for sql_file in schema app-user master-data; do
+   print_heading "Load SQL File - $sql_file"
+   mysql -h mysql.devopsdvs.online -uroot
+   status_check $?
+  done
+
+  systemd_setup
+}
