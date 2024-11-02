@@ -44,7 +44,8 @@ status_check() {
 systemd_setup() {
 
  print_heading "Copy the Service File"
- cp $scripts_path/$app_name.service /etc/systemd/system/$app_name.service
+ cp $scripts_path/$app_name.service /etc/systemd/system/$app_name.service &>>$log_file
+ sed -i -e "s/RABBITMQ_PASSWORD/${RABBITMQ_PASSWORD}" /etc/systemd/system/$app_name.service &>>$log_file
  status_check $?
 
  print_heading "Start Application Service File"
@@ -116,7 +117,7 @@ maven_setup() {
 
   for sql_file in schema app-user master-data; do
    print_heading "Load SQL File - $sql_file"
-   mysql -h mysql.devopsdvs.online -uroot &>>$log_file
+   mysql -h mysql.devopsdvs.online -uroot -p$MYSQL_ROOT_PASSWORD </app/db/$sql_file.sql &>>$log_file
    status_check $?
   done
 
