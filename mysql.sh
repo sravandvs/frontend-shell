@@ -1,7 +1,7 @@
 source common.sh
 app_name=mysql
 
-if [ -z "$1"]; then
+if [ -z "$1" ]; then
   echo Input MySQL Root Password is missing
   exit 1
 fi
