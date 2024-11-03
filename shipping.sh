@@ -10,14 +10,16 @@ MYSQL_ROOT_PASSWORD=$1
 
 maven_setup
 
-  print_heading "Install MySQL Client"
-    dnf install mysql -y &>>$log_file
-    status_check $?
+print_heading "Install MySQL Client"
+dnf install mysql -y &>>$log_file
+status_check $?
 
-    for sql_file in schema app-user master-data; do
-     print_heading "Load SQL File - $sql_file"
-     mysql -h mysql.devopsdvs.online -uroot -p$MYSQL_ROOT_PASSWORD </app/db/$sql_file.sql &>>$log_file
-     status_check $?
-    done
+for sql_file in schema app-user master-data; do
+  print_heading "Load SQL File - $sql_file"
+  mysql -h mysql.devopsdvs.online -uroot -p$MYSQL_ROOT_PASSWORD </app/db/$sql_file.sql &>>$log_file
+  status_check $?
+done
 
-  systemctl restart
+print_heading "Restart Shipping Service"
+systemctl restart shipping &>>$log_file
+status_check $?
