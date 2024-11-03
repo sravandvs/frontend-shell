@@ -12,7 +12,7 @@ dnf install mongodb-mongosh -y &>>$log_file
 status_check $?
 
 print_heading "Load Master Data"
-mongosh --host mongodb.devopsdvs.online <app/db/master-data.js
+mongosh --host mongodb.devopsdvs.online </app/db/master-data.js
 status_check $?
 
 print_heading "Restart Catalogue Service"
