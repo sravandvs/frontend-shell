@@ -112,6 +112,5 @@ maven_setup() {
   mv target/$app_name-1.0.jar $app_name.jar &>>$log_file
   status_check $?
 
-
   systemd_setup
 }
