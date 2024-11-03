@@ -6,6 +6,8 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
+RABBITMQ_PASSWORD=$1
+
 print_heading "Copy Dispatch Service File"
 cp dispatch.service /etc/systemd/system/dispatch.service &>>log_file
 status_check $?
